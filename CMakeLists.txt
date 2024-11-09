@@ -8,7 +8,7 @@ option(USE_LOGGER "Log the event of window" ON)
 
 set(source_file
         src/logger.cpp
-        Test/main.cpp
+        Testing/main.cpp
         src/mTime.cpp
         src/mwindow.cpp)
 set(include_file
@@ -16,7 +16,7 @@ set(include_file
         include/mwindow/mTime.h
         include/mwindow/mwindow.h)
 
-add_executable(Test WIN32 Test/main.cpp)
+add_executable(Test WIN32 Testing/main.cpp)
 add_library(MyWindowApi ${include_file} ${source_file})
 
 if (USE_LOGGER)
