@@ -17,6 +17,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR pCmdLine,i
 
     LOG_INFO("Create window");
     if(!window->handle) return 0;
+    LOG_INFO("Show window");
     ShowWindow(window->handle,nCmdShow);
 
     while(windowApp.Update());
