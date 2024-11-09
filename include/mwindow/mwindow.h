@@ -28,6 +28,8 @@ namespace mwindow::window
         static LRESULT WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
         bool Initialize(HINSTANCE hInstance);
         bool Update();
+
+        void UnInitialize();
         [[nodiscard]]
         std::shared_ptr<MWindow> CreateNewWindow(int x, int y, const std::string &name) const;
         std::string className  = "MCLass";

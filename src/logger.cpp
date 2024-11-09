@@ -3,21 +3,20 @@
 //
 
 #include <iostream>
-#include <mwindow/logging.h>
+#include <mwindow/logger.h>
 
 #include "mwindow/mwindow.h"
 
 
 namespace mwindow::debug
 {
-    DebugConsole::~DebugConsole()
+    void Logger::UnInitialize()
     {
         FreeConsole();
     }
 
-    void DebugConsole::Initalize()
+    void Logger::Initialize()
     {
-
         FreeConsole();
         AllocConsole();
         AttachConsole(GetCurrentProcessId());
@@ -26,31 +25,32 @@ namespace mwindow::debug
         freopen_s(&file, "CONOUT$", "w", stderr);
     }
 
-    void DebugConsole::LogError(std::string message)
+    void Logger::LogError(std::string message)
     {
-        message.insert(0,GetLogTime() + ": ");
+        message.insert(0,GetLogTime() + " ERROR: ");
         std::cerr << message << std::endl;
     }
 
-    void DebugConsole::LogWarning(std::string message)
+    void Logger::LogWarning(std::string message)
     {
 
-        message.insert(0,GetLogTime() + ": ");
+        message.insert(0,GetLogTime() + " WARNING: ");
         std::cout << message << std::endl;
     }
 
-    void DebugConsole::LogInfo(std::string message)
+    void Logger::LogInfo(std::string message)
     {
-        message.insert(0,GetLogTime() + ": ");
+        message.insert(0,GetLogTime() + " INFOR: ");
         std::cout << message << std::endl;
     }
 
-    void DebugConsole::LogDebug(std::string message)
+    void Logger::LogDebug(std::string message)
     {
-        message.insert(0,GetLogTime() + ": ");
+        message.insert(0,GetLogTime() + " DEBUG: ");
         std::cout << message << std::endl;
     }
-    std::string DebugConsole::GetLogTime()
+
+    std::string Logger::GetLogTime()
     {
         auto now  = std::chrono::system_clock::to_time_t( mTime::now());
         std::stringstream ss;

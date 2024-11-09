@@ -3,6 +3,7 @@
 //
 #include <mwindow/mwindow.h>
 #include <memory>
+#include <mwindow/logger.h>
 #include <system_error>
 
 namespace mwindow::window
@@ -16,6 +17,12 @@ namespace mwindow::window
             targetWindow = static_cast<MWindow*>(lpCreateStruct->lpCreateParams);
             SetWindowLongPtr(hwnd,GWLP_USERDATA,reinterpret_cast<LONG_PTR>(targetWindow));
         }
+        if(msg==WM_DESTROY)
+        {
+            PostQuitMessage(0);
+            return 0;
+        }
+
         return DefWindowProc(hwnd,msg,wParam,lParam);
     }
 
@@ -30,6 +37,11 @@ namespace mwindow::window
 
 
         RegisterClass(&wc);
+
+
+#if defined(USE_LOGGER)
+        mwindow::debug::Logger::Initialize();
+#endif
         return true;
     }
 
@@ -44,6 +56,14 @@ namespace mwindow::window
         }
         return true;
 
+    }
+
+    void MWindowApp::UnInitialize()
+    {
+        UnregisterClass(className.c_str(), hInstance);
+#if defined(USE_LOGGER)
+        mwindow::debug::Logger::UnInitialize();
+#endif
     }
 
     std::shared_ptr<MWindow> MWindowApp::CreateNewWindow(const int x, const int y, const std::string &name) const

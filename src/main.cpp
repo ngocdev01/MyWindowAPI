@@ -4,26 +4,22 @@
 
 #include <iostream>
 #include <mwindow/mwindow.h>
-#include <mwindow/logging.h>
+#include <mwindow/logger.h>
 using namespace  mwindow::window;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR pCmdLine,int nCmdShow)
 {
     MWindowApp windowApp;
-    mwindow::debug::DebugConsole debugConsole;
 
     windowApp.Initialize(hInstance);
-    debugConsole.Initalize();
-    debugConsole.LogInfo("Start create window");
+
     auto window = windowApp.CreateNewWindow(800,600,"MyWindow");
 
-
+    LOG_INFO("Create window");
     if(!window->handle) return 0;
     ShowWindow(window->handle,nCmdShow);
-    debugConsole.LogInfo("Create window completed");
-    while(windowApp.Update())
-    {
 
-    }
+    while(windowApp.Update());
+    windowApp.UnInitialize();
     return 0;
 }

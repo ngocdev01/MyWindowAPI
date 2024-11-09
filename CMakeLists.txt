@@ -3,12 +3,26 @@ project(MyWindowApi)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Test WIN32 src/main.cpp)
+option(USE_LOGGER "Log the event of window" ON)
 
-add_library(MyWindowApi  src/logging.cpp
+
+set(source_file
+        src/logger.cpp
         src/main.cpp
         src/mTime.cpp
         src/mwindow.cpp)
+set(include_file
+        include/mwindow/logger.h
+        include/mwindow/mTime.h
+        include/mwindow/mwindow.h)
+
+add_executable(Test WIN32 src/main.cpp)
+add_library(MyWindowApi ${include_file} ${source_file})
+
+if (USE_LOGGER)
+    target_compile_definitions(MyWindowApi PUBLIC "USE_LOGGER")
+    target_compile_definitions(Test PUBLIC "USE_LOGGER")
+endif()
 
 target_include_directories(MyWindowApi PUBLIC include)
 target_link_libraries(Test PUBLIC MyWindowApi)
