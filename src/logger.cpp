@@ -4,8 +4,7 @@
 
 #include <iostream>
 #include <mwindow/logger.h>
-
-#include "mwindow/mwindow.h"
+#include <mwindow/mwindow.h>
 
 
 namespace mwindow::debug

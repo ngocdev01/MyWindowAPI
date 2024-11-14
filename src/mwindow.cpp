@@ -4,7 +4,6 @@
 #include <mwindow/mwindow.h>
 #include <memory>
 #include <mwindow/logger.h>
-#include <system_error>
 
 namespace mwindow::window
 {
